@@ -130,11 +130,36 @@ function addOffice() {
     daysFromDom != null &&
     daysToDom != null
   ) {
-    officesArr.push(offices);
-    localStorage.setItem("finalResult", JSON.stringify(officesArr));
+      if (finalResultArr == null) {
+        officesArr.push(offices); 
+        localStorage.setItem("finalResult", JSON.stringify(officesArr));
+      }else{
+        for (let i = 0; i < finalResultArr; i++) {
+          officesArr.push(offices); 
+          
+        }
+      }
+      localStorage.setItem("finalResult", JSON.stringify(officesArr));      
     alert("تم اضافة المكتب");
     location.reload();
   }
+}
+
+
+let finalResultArr = JSON.parse(localStorage.getItem("finalResult"));
+let resultShow = document.getElementById("myResult");
+
+if (finalResultArr != null) {
+  inResult();
+  outResult();
+  inOutResult();
+  coverAvg();
+  rateAvg();
+  daysAvg();
+  carsSum();
+  coverOffices();
+  officeQuality();
+  officeNum();
 }
 
 function showDropTime() {
@@ -143,8 +168,7 @@ function showDropTime() {
     .classList.toggle("dropdown-contentShow");
 }
 
-let finalResultArr = JSON.parse(localStorage.getItem("finalResult"));
-let resultShow = document.getElementById("myResult");
+
 
 var map = L.map("map").setView([31.772237034523194, 35.212629171606544], 6);
 
@@ -293,9 +317,15 @@ function coverOffices() {
       sum = eval(sum + parseFloat(resultlonglat[x]));
     }
     let avg = eval(sum / resultlonglat.length).toFixed(2);
-    return (document.getElementById(
-      "coverOffices"
-    ).innerHTML = `<h3>${avg} كيلومتر</h3>`);
+    if (avg == "NaN") {
+      return (document.getElementById(
+        "coverOffices"
+      ).innerHTML = `<h3>0 كيلومتر</h3>`);
+    } else {
+      return (document.getElementById(
+        "coverOffices"
+      ).innerHTML = `<h3>${avg} كيلومتر</h3>`);
+    }
   }
 }
 
@@ -344,18 +374,7 @@ function eliminateDuplicates(myArray) {
   return elementCounts;
 }
 
-if (finalResultArr != null) {
-  inResult();
-  outResult();
-  inOutResult();
-  coverAvg();
-  rateAvg();
-  daysAvg();
-  carsSum();
-  coverOffices();
-  officeQuality();
-  officeNum();
-}
+
 
 function inResultShow() {
   if (finalResultArr != null) {
@@ -455,10 +474,9 @@ function officeNumShow() {
   document.getElementById("officeNum").classList.toggle("dispNone");
 }
 
-
 function removeOffice() {
   if (finalResultArr != null) {
     localStorage.clear();
-   location.reload();
+    location.reload();
   }
 }
