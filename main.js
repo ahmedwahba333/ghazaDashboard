@@ -134,6 +134,7 @@ function addOffice() {
     officesArr.push(offices);
     localStorage.setItem("finalResult", JSON.stringify(officesArr));
     alert("تم اضافة المكتب")
+    location.reload();
   }
 }
 
