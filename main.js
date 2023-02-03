@@ -8,10 +8,20 @@ function showDropRate() {
     .getElementById("dropdown-contentRate")
     .classList.toggle("dropdown-contentShow");
 }
+let officesArr;
+if (localStorage.getItem("finalResult") != undefined) {
+  officesArr = [];
+  for (let i = 0; i < JSON.parse(localStorage.getItem("finalResult")).length; i++) {
+    officesArr.push(JSON.parse(localStorage.getItem("finalResult"))[i]);
+    
+  }
+}else{
+   officesArr = [];
+}
 
-let officesArr = [];
-
+let finalResultArr;
 function addOffice() {
+
   let offices = {};
   let officeNameDom = document.getElementById("officeName");
   let govermentDom = document.getElementById("goverment");
@@ -130,21 +140,13 @@ function addOffice() {
     daysFromDom != null &&
     daysToDom != null
   ) {
-    if (finalResultArr == null) {
       officesArr.push(offices);
-      localStorage.setItem("finalResult", JSON.stringify(officesArr));
-    } else {
-      for (let i = 0; i < finalResultArr; i++) {
-        officesArr.push(offices);
-      }
-    }
-    localStorage.setItem("finalResult", JSON.stringify(officesArr));
-    alert("تم اضافة المكتب");
-    location.reload();
+      localStorage.setItem("finalResult", JSON.stringify(officesArr)); 
+      alert("تم اضافة مكتب");
+      window.location.reload();
   }
 }
-
-let finalResultArr = JSON.parse(localStorage.getItem("finalResult"));
+  finalResultArr = JSON.parse(localStorage.getItem("finalResult"));
 let resultShow = document.getElementById("myResult");
 
 if (finalResultArr != null) {
@@ -164,6 +166,8 @@ function showDropTime() {
   document
     .getElementById("dropdown-contentTime")
     .classList.toggle("dropdown-contentShow");
+
+  document.getElementById("dropdown-contentTime").classList.remove("dispNone");
 }
 
 var map = L.map("map").setView([31.772237034523194, 35.212629171606544], 6);
@@ -174,7 +178,16 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 // L.marker([31.772237034523194, 35.212629171606544]).addTo(map);
-
+if (finalResultArr != null) {
+  for (let i = 0; i < finalResultArr.length; i++) {
+    // if (finalResultArr[i].cover == "inOut") {
+    L.marker([finalResultArr[i].Longtiud, finalResultArr[i].Latuitd])
+      .addTo(map)
+      .bindPopup(finalResultArr[i].officeName)
+      .openPopup();
+    // }
+  }
+}
 function inResult() {
   if (finalResultArr != null) {
     let inCount = 0;
@@ -208,7 +221,7 @@ function inOutResult() {
   if (finalResultArr != null) {
     let inCount = 0;
     for (let i = 0; i < finalResultArr.length; i++) {
-      if (finalResultArr[i].cover == "out") {
+      if (finalResultArr[i].cover == "inOut") {
         inCount++;
       }
     }
@@ -255,9 +268,20 @@ function daysAvg() {
     let daysArr = [];
     for (let i = 0; i < finalResultArr.length; i++) {
       if (finalResultArr[i].daysFrom >= finalResultArr[i].daysTo) {
-        daysArr.push(finalResultArr[i].daysTo + 7 - finalResultArr[i].daysFrom);
+        daysArr.push(
+          eval(
+            parseInt(finalResultArr[i].daysTo) +
+              7 -
+              parseInt(finalResultArr[i].daysFrom)
+          )
+        );
       } else {
-        daysArr.push(finalResultArr[i].daysTo - finalResultArr[i].daysFrom);
+        daysArr.push(
+          eval(
+            parseInt(finalResultArr[i].daysTo) -
+              parseInt(finalResultArr[i].daysFrom)
+          )
+        );
       }
     }
     let sum = 0;
@@ -354,13 +378,12 @@ function officeNum() {
       officesName.push(finalResultArr[z].goverment);
     }
     let myuniqArr = eliminateDuplicates(officesName);
-    resultShow.innerHTML = "";
+    document.getElementById("officeNumChild").innerHTML.innerHTML = "";
     for (let i = 0; i < Object.values(myuniqArr).length; i++) {
       document.getElementById("officeNum").innerHTML = `<h3>محافظة ${
         Object.keys(myuniqArr)[i]
       } بها ${Object.values(myuniqArr)[i]}</h3>`;
       if (i != Object.values(myuniqArr).length - 1) {
-       
         document.getElementById("officeNumChild").innerHTML += `<h3>محافظة ${
           Object.keys(myuniqArr)[i]
         } بها ${Object.values(myuniqArr)[i]}</h3>`;
@@ -478,8 +501,8 @@ function officeNumShow() {
 }
 
 function removeOffice() {
-  if (finalResultArr != null) {
-    localStorage.clear();
-    location.reload();
-  }
+  // if (finalResultArr != null) {
+  localStorage.clear();
+  location.reload();
+  // }
 }
