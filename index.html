@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main">
+        <div class="sectionLeft">
+            <div class="header">
+                <h1>إحصائية مكاتب التاكسيات <br> في قطاع غزة</h1>
+            </div>
+            <hr>
+            <div class="header">
+                <h1>نموذج تعبئة الاحصائية</h1>
+            </div>
+            <hr>
+            <div class="myform header">
+                <label for="officeName">اسم المكتب</label>
+                <input type="text" name="officeName" id="officeName">
+                <p class="errorsClass" id="officeNameError"></p>
+                <label for="goverment">المحافظة</label>
+                <input type="text" name="goverment" id="goverment">
+                <p class="errorsClass" id="govermentError"></p>
+                <label for="phoneNumber">رقم الهاتف</label>
+                <input type="text" name="phoneNumber" id="phoneNumber">
+                <p class="errorsClass" id="phoneNumberError"></p>
+            </div>
+            <hr>
+            <div class="myForm2 header">
+                <div class="myForm2Left">
+                    <input type="text" placeholder="Longtiud" id="Longtiud">
+                    <p class="errorsClass" id="LongtiudError"></p>
+                    <input type="number" id="coverageKm" placeholder="المساحة التي يغطيها المكتب بالكيلومتر">
+                    <p class="errorsClass" id="coverageKmError"></p>
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="showDropTime()">
+                            <p>ساعات العمل</p>
+                        </button>
+                        <div class="dropdown-content" id="dropdown-contentTime">
+                            <p>من</p>
+                            <div class="daysFrom days">
+                                <div class="day">
+                                    <input type="time" id="timeFrom" name="timeFrom" value="timeFrom">
+                                </div>
+                            </div>
+
+
+                            <p>الي</p>
+                            <div class="daysTo days">
+                                <div class="day">
+                                    <input type="time" id="timeTo" name="timeTo" value="timeFrom">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="errorsClass" id="dropdown-contentTimeError"></p>
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="showDropRate()">
+                            <p>تقييم المكتب</p>
+                        </button>
+                        <div class="dropdown-content" id="dropdown-contentRate">
+                            <div class="daysFrom days">
+                                <div class="day">
+                                    <input type="radio" id="rat1" name="rate" value="1">
+                                      <label for="1">1</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="rat1" name="rate" value="2">
+                                      <label for="2">2</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="rat1" name="rate" value="3">
+                                      <label for="3">3</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="rat1" name="rate" value="4">
+                                      <label for="4">4</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="rat1" name="rate" value="5">
+                                      <label for="5">5</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="errorsClass" id="dropdown-contentRateError"></p>
+                </div>
+                <div class="myForm2Right">
+                    <input type="text" placeholder="Latuitd" id="Latuitd">
+                    <p class="errorsClass" id="LatuitdError"></p>
+                    <input type="number" placeholder="عدد السيارات" id="carsNumber">
+                    <p class="errorsClass" id="carsNumberError"></p>
+                    <select name="cover" id="cover" class="coverege">
+                        <option disabled selected>نوع التغطية</option>
+                        <option value="in">داخلية</option>
+                        <option value="out">خارجية</option>
+                        <option value="inOut">داخلية وخارجية</option>
+                    </select>
+                    <p class="errorsClass" id="coverError"></p>
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="showDropDays()">
+                            <p>ايام العمل</p>
+                        </button>
+                        <div class="dropdown-content" id="dropdown-contentDays">
+                            <p>من</p>
+                            <div class="daysFrom days">
+                                <div class="day">
+                                    <input type="radio" id="Sunday" name="daysFrom" value="1">
+                                      <label for="Sunday">الاحد</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Monday" name="daysFrom" value="2">
+                                      <label for="Monday">الاثنين</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Tuesday" name="daysFrom" value="3">
+                                      <label for="Tuesday">الثلاثاء</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Wednesday" name="daysFrom" value="4">
+                                      <label for="Wednesday">الاربعاء</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Thursday" name="daysFrom" value="5">
+                                      <label for="Thursday">الخميس</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Friday" name="daysFrom" value="6">
+                                      <label for="Friday">الجمعة</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Saturday" name="daysFrom" value="7">
+                                      <label for="Saturday">السبت</label>
+                                </div>
+                            </div>
+
+
+                            <p>الي</p>
+                            <div class="daysTo days">
+
+                                <div class="day">
+                                    <input type="radio" id="Sunday" name="daysTo" value="1">
+                                      <label for="Sunday">الاحد</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Monday" name="daysTo" value="2">
+                                      <label for="Monday">الاثنين</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Tuesday" name="daysTo" value="3">
+                                      <label for="Tuesday">الثلاثاء</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Wednesday" name="daysTo" value="4">
+                                      <label for="Wednesday">الاربعاء</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Thursday" name="daysTo" value="5">
+                                      <label for="Thursday">الخميس</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Friday" name="daysTo" value="6">
+                                      <label for="Friday">الجمعة</label>
+                                </div>
+                                <div class="day">
+                                    <input type="radio" id="Saturday" name="daysTo" value="7">
+                                      <label for="Saturday">السبت</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="errorsClass" id="dropdown-contentDaysError"></p>
+                </div>
+            </div>
+            <button class="myBtn" onclick="addOffice()">
+                <p>إضافة المكتب</p>
+            </button>
+        </div>
+        <div class="sectionRight">
+            <div id="map" style="height: 50vh;"></div>
+            <div class="result">
+                <div class="resultBox0">
+                    <div class="resultBox" onclick="officeNum()">
+                        <p>عدد المكاتب في كل محافظة</p>
+                    </div>
+                </div>
+                <div class="resultBox0">
+                    <div class="resultBox" onclick="carsSum()">
+                        <p>مجموع السيارات في المكاتب</p>
+                    </div>
+                    <div class="resultBox" onclick="coverOffices()">
+                        <p>نسبة تباعد المكاتب</p>
+                    </div>
+                    <div class="resultBox" onclick="officeQuality()">
+                        <p>نسبة جودة المكاتب</p>
+                    </div>
+                </div>
+                <div class="resultBox0">
+                    <div class="resultBox" onclick="coverAvg()">
+                        <p>متوسط تغطية المكاتب</p>
+                    </div>
+                    <div class="resultBox" onclick="rateAvg()">
+                        <p>متوسط تقييم العملاء</p>
+                    </div>
+                    <div class="resultBox" onclick="daysAvg()">
+                        <p>متوسط أيام العمل</p>
+                    </div>
+                </div>
+                <div class="resultBox0">
+                    <div class="resultBox" onclick="inResult()">
+                        <p>مجموع المكاتب الداخلية</p>
+                    </div>
+                    <div class="resultBox" onclick="outResult()">
+                        <p>مجموع المكاتب الخارجية</p>
+                    </div>
+                    <div class="resultBox" onclick="inOutResult()">
+                        <p>مجموع المكاتب الداخلية والخارجية</p>
+                    </div>
+                </div>
+            </div>
+            <div id="myResult"></div>
+        </div>
+    </div>
+
+
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
