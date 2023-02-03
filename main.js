@@ -130,21 +130,19 @@ function addOffice() {
     daysFromDom != null &&
     daysToDom != null
   ) {
-      if (finalResultArr == null) {
-        officesArr.push(offices); 
-        localStorage.setItem("finalResult", JSON.stringify(officesArr));
-      }else{
-        for (let i = 0; i < finalResultArr; i++) {
-          officesArr.push(offices); 
-          
-        }
+    if (finalResultArr == null) {
+      officesArr.push(offices);
+      localStorage.setItem("finalResult", JSON.stringify(officesArr));
+    } else {
+      for (let i = 0; i < finalResultArr; i++) {
+        officesArr.push(offices);
       }
-      localStorage.setItem("finalResult", JSON.stringify(officesArr));      
+    }
+    localStorage.setItem("finalResult", JSON.stringify(officesArr));
     alert("تم اضافة المكتب");
     location.reload();
   }
 }
-
 
 let finalResultArr = JSON.parse(localStorage.getItem("finalResult"));
 let resultShow = document.getElementById("myResult");
@@ -167,8 +165,6 @@ function showDropTime() {
     .getElementById("dropdown-contentTime")
     .classList.toggle("dropdown-contentShow");
 }
-
-
 
 var map = L.map("map").setView([31.772237034523194, 35.212629171606544], 6);
 
@@ -360,11 +356,20 @@ function officeNum() {
     let myuniqArr = eliminateDuplicates(officesName);
     resultShow.innerHTML = "";
     for (let i = 0; i < Object.values(myuniqArr).length; i++) {
-      document.getElementById("officeNum").innerHTML += `<h3>محافظة ${
+      document.getElementById("officeNum").innerHTML = `<h3>محافظة ${
         Object.keys(myuniqArr)[i]
       } بها ${Object.values(myuniqArr)[i]}</h3>`;
+      if (i != Object.values(myuniqArr).length - 1) {
+       
+        document.getElementById("officeNumChild").innerHTML += `<h3>محافظة ${
+          Object.keys(myuniqArr)[i]
+        } بها ${Object.values(myuniqArr)[i]}</h3>`;
+      }
     }
   }
+}
+function officeNumShowTotal() {
+  document.getElementById("officeNumChild").classList.toggle("dispNone");
 }
 function eliminateDuplicates(myArray) {
   const elementCounts = {};
@@ -373,8 +378,6 @@ function eliminateDuplicates(myArray) {
   });
   return elementCounts;
 }
-
-
 
 function inResultShow() {
   if (finalResultArr != null) {

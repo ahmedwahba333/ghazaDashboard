@@ -181,22 +181,22 @@
                 </div>
             </div>
             <div class="myBtns">
-            <button class="myBtn" onclick="addOffice()">
-                <p>إضافة المكتب</p>
-            </button>
-            <button class="myBtn" onclick="removeOffice()">
-                <p>حذف البيانات المخذنه</p>
-            </button>
-        </div>
+                <button class="myBtn" onclick="addOffice()">
+                    <p>إضافة المكتب</p>
+                </button>
+                <button class="myBtn" onclick="removeOffice()">
+                    <p>حذف البيانات المخذنه</p>
+                </button>
+            </div>
         </div>
         <div class="sectionRight">
             <div id="map" style="height: 50vh;"></div>
             <div class="result">
                 <div class="resultBox0">
-                    <div class="resultBox" onclick="officeNumShow()">
-                        <p>عدد المكاتب في كل محافظة</p>
-                        <div class="resultBoxDiv" id="officeNum">
-                        </div>
+                    <div class="resultBox" >
+                        <p onclick="officeNumShow()">عدد المكاتب في كل محافظة</p>
+                        <div class="resultBoxDiv" id="officeNum" onclick="officeNumShowTotal()"></div>
+                        <div class="resultBoxDivChild dispNone" id="officeNumChild"></div>
                     </div>
                 </div>
                 <div class="resultBox0">
@@ -246,8 +246,7 @@
                     </div>
                     <div class="resultBox" onclick="inOutResultShow()">
                         <p>مجموع المكاتب الداخلية والخارجية</p>
-                        <div class="resultBoxDiv" id="inOutResult">
-                        </div>
+                            <div class="resultBoxDiv" id="inOutResult"></div>
                     </div>
                 </div>
             </div>

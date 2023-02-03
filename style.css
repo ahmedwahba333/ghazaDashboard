@@ -200,7 +200,7 @@ hr {
 .result {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 10px;
+    gap: 20px;
     padding: 20px;
 }
 
@@ -212,6 +212,7 @@ hr {
 }
 .resultBox{
     position: relative;
+    margin-bottom: 20px;
 }
 .resultBox  p{
     height: 5rem;
@@ -229,7 +230,7 @@ hr {
 
 .resultBoxDiv{
     background-color: #dadada;
-    position: absolute;
+    /* position: relative; */
     width: 100%;
     direction: rtl;
     line-height: 30px;
@@ -238,6 +239,14 @@ hr {
     cursor: pointer;
     background-color: rgb(229, 229, 229);
     transition: 0.5s;
+}
+.resultBoxDivChild{
+    position: absolute;
+    top: 110px;;
+    background-color: #dadada;
+    width: 100%;
+    direction: rtl;
+    line-height: 30px;
 }
 
 /* right */
