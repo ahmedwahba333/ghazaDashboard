@@ -204,23 +204,33 @@ hr {
     justify-content: space-between;
     height: 20rem;
 }
-
-.resultBox {
+.resultBox{
+    position: relative;
+}
+.resultBox  p{
     height: 5rem;
     background-color: #fff;
-    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-size: 25px;
-
 }
 
-.resultBox:hover {
+.dispNone{
+    display: none;
+}
+
+.resultBoxDiv{
+    background-color: #dadada;
+    position: absolute;
+    width: 100%;
+    direction: rtl;
+    line-height: 30px;
+}
+.resultBox p:hover {
     cursor: pointer;
     background-color: rgb(229, 229, 229);
-    transform: scale(1.05);
     transition: 0.5s;
 }
 

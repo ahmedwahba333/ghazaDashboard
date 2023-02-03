@@ -32,7 +32,6 @@ function addOffice() {
   } else {
     document.getElementById("officeNameError").innerText =
       "من فضلك ادخل اسم المكتب";
-
   }
 
   if (govermentDom.value.length >= 1) {
@@ -133,20 +132,10 @@ function addOffice() {
   ) {
     officesArr.push(offices);
     localStorage.setItem("finalResult", JSON.stringify(officesArr));
-    alert("تم اضافة المكتب")
+    alert("تم اضافة المكتب");
     location.reload();
   }
 }
-
-
-var map = L.map("map").setView([31.772237034523194, 35.212629171606544], 6);
-
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
-
-// L.marker([31.772237034523194, 35.212629171606544]).addTo(map);
 
 function showDropTime() {
   document
@@ -157,87 +146,55 @@ function showDropTime() {
 let finalResultArr = JSON.parse(localStorage.getItem("finalResult"));
 let resultShow = document.getElementById("myResult");
 
+var map = L.map("map").setView([31.772237034523194, 35.212629171606544], 6);
+
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+// L.marker([31.772237034523194, 35.212629171606544]).addTo(map);
+
 function inResult() {
-  for (
-    let x = 0;
-    x < document.getElementsByClassName("leaflet-marker-icon").length;
-    x++
-  ) {
-    if(document.getElementsByClassName("leaflet-popup")!= undefined){
-    document.getElementsByClassName("leaflet-popup")[0].style.display =
-      "none";
-    }
-    document.getElementsByClassName("leaflet-marker-icon")[x].style.display =
-      "none";
-  }
   if (finalResultArr != null) {
     let inCount = 0;
     for (let i = 0; i < finalResultArr.length; i++) {
       if (finalResultArr[i].cover == "in") {
         inCount++;
-        L.marker([finalResultArr[i].Longtiud, finalResultArr[i].Latuitd])
-          .addTo(map)
-          .bindPopup(finalResultArr[i].officeName)
-          .openPopup();
       }
     }
 
-    resultShow.innerHTML = `<h3>مجموع المكاتب الداخلية = ${inCount}</h3>`;
+    return (document.getElementById(
+      "inResult"
+    ).innerHTML = `<h3>${inCount}</h3>`);
   }
 }
+
 function outResult() {
-  for (
-    let x = 0;
-    x < document.getElementsByClassName("leaflet-marker-icon").length;
-    x++
-  ) {
-    if(document.getElementsByClassName("leaflet-popup")!= undefined){
-    document.getElementsByClassName("leaflet-popup")[0].style.display =
-      "none";
-    }
-    document.getElementsByClassName("leaflet-marker-icon")[x].style.display =
-      "none";
-  }
   if (finalResultArr != null) {
     let inCount = 0;
     for (let i = 0; i < finalResultArr.length; i++) {
       if (finalResultArr[i].cover == "out") {
         inCount++;
-        L.marker([finalResultArr[i].Longtiud, finalResultArr[i].Latuitd])
-          .addTo(map)
-          .bindPopup(finalResultArr[i].officeName)
-          .openPopup();
       }
     }
-    resultShow.innerHTML = `<h3>مجموع المكاتب الخارجية = ${inCount}</h3>`;
+    return (document.getElementById(
+      "outResult"
+    ).innerHTML = `<h3>${inCount}</h3>`);
   }
 }
 
 function inOutResult() {
-  for (
-    let x = 0;
-    x < document.getElementsByClassName("leaflet-marker-icon").length;
-    x++
-  ) {
-    if(document.getElementsByClassName("leaflet-popup")!= undefined){
-    document.getElementsByClassName("leaflet-popup")[0].style.display =
-      "none";
-    }
-    document.getElementsByClassName("leaflet-marker-icon")[x].style.display =
-      "none";
-  }
   if (finalResultArr != null) {
     let inCount = 0;
     for (let i = 0; i < finalResultArr.length; i++) {
-      if (finalResultArr[i].cover == "inOut") {
+      if (finalResultArr[i].cover == "out") {
         inCount++;
-        L.marker([finalResultArr[i].Longtiud, finalResultArr[i].Latuitd])
-          .addTo(map)
-          .bindPopup(finalResultArr[i].officeName)
-          .openPopup();
       }
     }
-    resultShow.innerHTML = `<h3>مجموع المكاتب الداخلية والخارجية = ${inCount}</h3>`;
+    return (document.getElementById(
+      "inOutResult"
+    ).innerHTML = `<h3>${inCount}</h3>`);
   }
 }
 
@@ -252,7 +209,9 @@ function coverAvg() {
       sum = eval(sum + parseFloat(coverageKmArr[x]));
     }
     let avg = eval(sum / coverageKmArr.length).toFixed(2);
-    resultShow.innerHTML = `<h3> متوسط تغطية المكاتب = ${avg} كيلومتر</h3>`;
+    return (document.getElementById(
+      "coverAvg"
+    ).innerHTML = `<h3>${avg} كيلومتر</h3>`);
   }
 }
 
@@ -267,22 +226,7 @@ function rateAvg() {
       sum = eval(sum + parseFloat(rateArr[x]));
     }
     let avg = eval(sum / rateArr.length).toFixed(2);
-    resultShow.innerHTML = `<h3>متوسط تقييم العملاء ${avg}</h3>`;
-  }
-}
-
-function rateAvg() {
-  if (finalResultArr != null) {
-    let rateArr = [];
-    for (let i = 0; i < finalResultArr.length; i++) {
-      rateArr.push(finalResultArr[i].rate);
-    }
-    let sum = 0;
-    for (let x = 0; x < rateArr.length; x++) {
-      sum = eval(sum + parseFloat(rateArr[x]));
-    }
-    let avg = eval(sum / rateArr.length).toFixed(2);
-    resultShow.innerHTML = `<h3>متوسط تقييم العملاء ${avg}</h3>`;
+    return (document.getElementById("rateAvg").innerHTML = `<h3>${avg}</h3>`);
   }
 }
 
@@ -301,7 +245,7 @@ function daysAvg() {
       sum = eval(sum + parseFloat(daysArr[x]));
     }
     let avg = eval(sum / finalResultArr.length).toFixed(2);
-    resultShow.innerHTML = `<h3>متوسط ايام العمل ${avg} يوم</h3>`;
+    return (document.getElementById("daysAvg").innerHTML = `<h3>${avg}</h3>`);
   }
 }
 
@@ -311,7 +255,9 @@ function carsSum() {
     for (let i = 0; i < finalResultArr.length; i++) {
       carsCount += parseInt(finalResultArr[i].carsNumber);
     }
-    resultShow.innerHTML = `<h3>مجموع السيارات في المكاتب = ${carsCount} سيارة</h3>`;
+    return (document.getElementById(
+      "carsSum"
+    ).innerHTML = `<h3>${carsCount} سيارة</h3>`);
   }
 }
 
@@ -347,7 +293,9 @@ function coverOffices() {
       sum = eval(sum + parseFloat(resultlonglat[x]));
     }
     let avg = eval(sum / resultlonglat.length).toFixed(2);
-    resultShow.innerHTML = `<h3>متوسط تباعد المكاتب = ${avg} كيلومتر</h3>`;
+    return (document.getElementById(
+      "coverOffices"
+    ).innerHTML = `<h3>${avg} كيلومتر</h3>`);
   }
 }
 
@@ -367,7 +315,9 @@ function officeQuality() {
     let finalResult = eval(
       ((avg * finalResultArr.length) / sumAll) * 100
     ).toFixed(2);
-    resultShow.innerHTML = `<h3>نسبة جودة المكاتب ${finalResult} %</h3>`;
+    return (document.getElementById(
+      "officeQuality"
+    ).innerHTML = `<h3>${finalResult} %</h3>`);
   }
 }
 
@@ -380,12 +330,11 @@ function officeNum() {
     let myuniqArr = eliminateDuplicates(officesName);
     resultShow.innerHTML = "";
     for (let i = 0; i < Object.values(myuniqArr).length; i++) {
-        resultShow.innerHTML += `<h3>محافظة ${
-          Object.keys(myuniqArr)[i]
-        } بها ${Object.values(myuniqArr)[i]}</h3>`;
-      }
+      document.getElementById("officeNum").innerHTML += `<h3>محافظة ${
+        Object.keys(myuniqArr)[i]
+      } بها ${Object.values(myuniqArr)[i]}</h3>`;
+    }
   }
- 
 }
 function eliminateDuplicates(myArray) {
   const elementCounts = {};
@@ -393,4 +342,115 @@ function eliminateDuplicates(myArray) {
     elementCounts[element] = (elementCounts[element] || 0) + 1;
   });
   return elementCounts;
+}
+
+if (finalResultArr != null) {
+  inResult();
+  outResult();
+  inOutResult();
+  coverAvg();
+  rateAvg();
+  daysAvg();
+  carsSum();
+  coverOffices();
+  officeQuality();
+  officeNum();
+}
+
+function inResultShow() {
+  if (finalResultArr != null) {
+    for (
+      let x = 0;
+      x < document.getElementsByClassName("leaflet-marker-icon").length;
+      x++
+    ) {
+      if (document.getElementsByClassName("leaflet-popup") != undefined) {
+        document.getElementsByClassName("leaflet-popup")[0].style.display =
+          "none";
+      }
+      document.getElementsByClassName("leaflet-marker-icon")[x].style.display =
+        "none";
+    }
+    for (let i = 0; i < finalResultArr.length; i++) {
+      if (finalResultArr[i].cover == "in") {
+        L.marker([finalResultArr[i].Longtiud, finalResultArr[i].Latuitd])
+          .addTo(map)
+          .bindPopup(finalResultArr[i].officeName)
+          .openPopup();
+      }
+    }
+  }
+  // document.getElementById("inResult").classList.toggle("dispNone");
+}
+
+function outResultShow() {
+  if (finalResultArr != null) {
+    for (
+      let x = 0;
+      x < document.getElementsByClassName("leaflet-marker-icon").length;
+      x++
+    ) {
+      if (document.getElementsByClassName("leaflet-popup") != undefined) {
+        document.getElementsByClassName("leaflet-popup")[0].style.display =
+          "none";
+      }
+      document.getElementsByClassName("leaflet-marker-icon")[x].style.display =
+        "none";
+    }
+    for (let i = 0; i < finalResultArr.length; i++) {
+      if (finalResultArr[i].cover == "out") {
+        L.marker([finalResultArr[i].Longtiud, finalResultArr[i].Latuitd])
+          .addTo(map)
+          .bindPopup(finalResultArr[i].officeName)
+          .openPopup();
+      }
+    }
+  }
+  // document.getElementById("outResult").classList.toggle("dispNone");
+}
+function inOutResultShow() {
+  if (finalResultArr != null) {
+    for (
+      let x = 0;
+      x < document.getElementsByClassName("leaflet-marker-icon").length;
+      x++
+    ) {
+      if (document.getElementsByClassName("leaflet-popup") != undefined) {
+        document.getElementsByClassName("leaflet-popup")[0].style.display =
+          "none";
+      }
+      document.getElementsByClassName("leaflet-marker-icon")[x].style.display =
+        "none";
+    }
+    for (let i = 0; i < finalResultArr.length; i++) {
+      if (finalResultArr[i].cover == "inOut") {
+        L.marker([finalResultArr[i].Longtiud, finalResultArr[i].Latuitd])
+          .addTo(map)
+          .bindPopup(finalResultArr[i].officeName)
+          .openPopup();
+      }
+    }
+  }
+  // document.getElementById("inOutResult").classList.toggle("dispNone");
+}
+function coverAvgShow() {
+  document.getElementById("coverAvg").classList.toggle("dispNone");
+}
+function rateAvgShow() {
+  document.getElementById("rateAvg").classList.toggle("dispNone");
+}
+function daysAvgShow() {
+  document.getElementById("daysAvg").classList.toggle("dispNone");
+}
+function carsSumShow() {
+  document.getElementById("carsSum").classList.toggle("dispNone");
+}
+function coverOfficesShow() {
+  document.getElementById("coverOffices").classList.toggle("dispNone");
+}
+function officeQualityShow() {
+  document.getElementById("officeQuality").classList.toggle("dispNone");
+}
+function officeNumShow() {
+  document.getElementById("officeNum").classList.toggle("dispNone");
 }
