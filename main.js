@@ -454,3 +454,11 @@ function officeQualityShow() {
 function officeNumShow() {
   document.getElementById("officeNum").classList.toggle("dispNone");
 }
+
+
+function removeOffice() {
+  if (finalResultArr != null) {
+    localStorage.clear();
+   location.reload();
+  }
+}
